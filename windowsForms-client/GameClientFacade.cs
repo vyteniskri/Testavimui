@@ -18,7 +18,6 @@ using windowsForms_client.Strategy;
 using windowsForms_client.Factory;
 using windowsForms_client.Prototype;
 using windowsForms_client.Adapter;
-using indowsForms_client.Adapter;
 using System.Security.AccessControl;
 
 namespace windowsForms_client

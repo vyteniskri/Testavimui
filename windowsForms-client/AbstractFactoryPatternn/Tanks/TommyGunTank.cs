@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace windowsForms_client.Tanks
 {
-    internal abstract class TommyGunTank : Tank
+    public abstract class TommyGunTank : Tank
     {
 
         public TommyGunTank() : base() 

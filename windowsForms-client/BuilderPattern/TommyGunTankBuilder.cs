@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace windowsForms_client.BuilderPattern
 {
-    internal class TommyGunTankBuilder : Builder
+    public class TommyGunTankBuilder : Builder
     {
         public void AddFullAutoShooting()
         {

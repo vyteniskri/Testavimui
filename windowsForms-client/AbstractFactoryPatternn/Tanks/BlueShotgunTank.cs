@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace windowsForms_client.Tanks
 {
-    internal class BlueShotgunTank : ShotgunTank
+    public class BlueShotgunTank : ShotgunTank
     {
         public BlueShotgunTank() : base()
         {

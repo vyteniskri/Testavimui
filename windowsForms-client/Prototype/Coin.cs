@@ -55,7 +55,8 @@ namespace windowsForms_client.Prototype
             else if (Type == "Diamond") return "Emerald";
             else return Type; 
         }
-        private string GetImagePathForCoin(string coinType)
+
+        public string GetImagePathForCoin(string coinType)
         {
             if (coinType == "Gold") return pathB +  "gold.jpg";
             else if (coinType == "Diamond") return pathB +  "diamond.jpg";

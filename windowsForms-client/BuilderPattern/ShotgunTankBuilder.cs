@@ -7,7 +7,7 @@ using windowsForms_client.Tanks;
 
 namespace windowsForms_client.BuilderPattern
 {
-    internal class ShotgunTankBuilder : Builder
+    public class ShotgunTankBuilder : Builder
     {
         public void AddMediumArmor()
         {

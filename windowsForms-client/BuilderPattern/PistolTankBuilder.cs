@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace windowsForms_client.BuilderPattern
 {
-    internal class PistolTankBuilder : Builder
+    public class PistolTankBuilder : Builder
     {
 
         public void AddLightArmor()
