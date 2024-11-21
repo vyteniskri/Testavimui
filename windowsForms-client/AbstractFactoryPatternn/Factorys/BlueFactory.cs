@@ -8,7 +8,7 @@ using windowsForms_client.Tanks;
 
 namespace windowsForms_client.AbstractFactoryPatternn.Factorys
 {
-    internal class BlueFactory : AbstractFactory
+    public class BlueFactory : AbstractFactory
     {
         public override Tank createPistolTank(string id, int x, int y)
         {

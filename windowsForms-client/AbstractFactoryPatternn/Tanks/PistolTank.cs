@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace windowsForms_client.Tanks
 {
-    internal abstract class PistolTank : Tank
+    public abstract class PistolTank : Tank
     {
 
         public PistolTank() : base()

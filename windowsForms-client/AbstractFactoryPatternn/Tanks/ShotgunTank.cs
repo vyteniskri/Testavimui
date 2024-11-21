@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace windowsForms_client.Tanks
 {
-    internal abstract class ShotgunTank : Tank
+    public abstract class ShotgunTank : Tank
     {
-        List<Bullet> shotgunBullets = new List<Bullet>();
+        public List<Bullet> shotgunBullets = new List<Bullet>();
 
         public ShotgunTank() 
         { 

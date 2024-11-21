@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using windowsForms_client.Adapter;
 using windowsForms_client;
 
-namespace indowsForms_client.Adapter
+namespace windowsForms_client.Adapter
 {
     public class MouseControlAdapter : IControl
     {

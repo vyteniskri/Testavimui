@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace windowsForms_client.Tanks
 {
-    internal class RedShotgunTank : ShotgunTank
+    public class RedShotgunTank : ShotgunTank
     {
         public RedShotgunTank() : base()
         {
