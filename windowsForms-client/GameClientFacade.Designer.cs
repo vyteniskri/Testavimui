@@ -66,6 +66,6 @@ namespace windowsForms_client
 
         #endregion
         private Label TimeLabel;
-        private Label gameState;
+        public Label gameState;
     }
 }
