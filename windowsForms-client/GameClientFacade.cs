@@ -27,11 +27,11 @@ namespace windowsForms_client
     {
         private bool isMousePressed = false; 
         private Point mousePosition;
-        private string controlType;
+        public string controlType;
 
 
         private IControl _controlAdapter;
-        private Tank CurrentTank;
+        public Tank CurrentTank;
         private List<Tank> allPlayers = new List<Tank>();
         private System.Timers.Timer gameLoopTimer;
         private bool spacebarPressed = false;
@@ -40,7 +40,7 @@ namespace windowsForms_client
 
         private System.Timers.Timer gameTimer;
         private System.Timers.Timer coinTimer;
-        private int elapsedSeconds = 0;
+        public int elapsedSeconds = 0;
 
         private System.Timers.Timer temporaryEffectTimer;
         private List<Obstacle> obstacles = new List<Obstacle>();
@@ -377,13 +377,14 @@ namespace windowsForms_client
         }
 
 
-        private bool IsCollidingWithObstacle(Tank tank, Obstacle obstacle)
+        public bool IsCollidingWithObstacle(Tank tank, Obstacle obstacle)
         {
             Rectangle tankRect = new Rectangle(tank.x_coordinate, tank.y_coordinate, 50, 50);
             Rectangle obstacleRect = new Rectangle(obstacle.x_coordinate, obstacle.y_coordinate, 50, 50);
             return tankRect.IntersectsWith(obstacleRect);
         }
-        private bool IsCollidingWithCoin(Tank tank, Coin coin)
+
+        public bool IsCollidingWithCoin(Tank tank, Coin coin)
         {
             Rectangle tankRect = new Rectangle(tank.x_coordinate, tank.y_coordinate, 50, 50);
             Rectangle coinRect = new Rectangle(coin.X, coin.Y, 10, 10);
@@ -548,12 +549,12 @@ namespace windowsForms_client
             }
 
             //COMMENT THIS
-            e.Graphics.DrawImage(coin.Details.image, coin.X, coin.Y, 10, 10);
+           e.Graphics.DrawImage(coin.Details.image, coin.X, coin.Y, 10, 10);
 
             foreach (var player in allPlayers.ToList())
             {
                 e.Graphics.FillRectangle(new SolidBrush(player.Color), player.x_coordinate, player.y_coordinate, 50, 50);
-
+                Console.WriteLine($"Player at ({player.x_coordinate}, {player.y_coordinate}), Color: {player.Color}");
                 foreach (var bullet in player.bullets.ToList())
                 {
                     e.Graphics.FillRectangle(new SolidBrush(player.Color), bullet.X, bullet.Y, bullet.Width, bullet.Height);

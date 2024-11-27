@@ -475,7 +475,7 @@ namespace Tests
             var testValue = Color.Orange;
 
             // Act
-            _testClass.Color = testValue;
+            //_testClass.Color = testValue;
 
             // Assert
             Assert.That(_testClass.Color, Is.EqualTo(testValue));

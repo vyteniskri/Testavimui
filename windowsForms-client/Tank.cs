@@ -31,7 +31,7 @@ namespace windowsForms_client
 
         //For shooting 
         public List<Bullet> bullets { get; set; }
-        protected Bullet bullet { get; set; }
+        public Bullet bullet { get; protected set; }
         protected int ShootingInterval { get; set; }
         protected System.Timers.Timer ShootingTimer { get; set; }
         protected string[] TankTurretLookingDirections { get; set; }
@@ -41,7 +41,7 @@ namespace windowsForms_client
         public virtual string TankType => GetType().Name;
 
         //Tank collor
-        public Color Color { get; set; }
+        public Color Color { get; protected set; }
 
 
         public bool IsFrozen { get; set; }

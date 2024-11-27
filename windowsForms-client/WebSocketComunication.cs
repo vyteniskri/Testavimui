@@ -12,13 +12,13 @@ using System.Text.Json.Serialization;
 
 namespace windowsForms_client
 {
-    internal class WebSocketComunication
+    public class WebSocketComunication
     {
         private static WebSocketComunication _instance;
         private static readonly object _lock = new object();  // Lock for thread-safety
 
         private ClientWebSocket clientSocket;
-        private GameClientFacade client;
+        public GameClientFacade client;
         private string tankType;
         private string selectedUpgrade;
 
@@ -29,6 +29,7 @@ namespace windowsForms_client
             this.selectedUpgrade = selectedUpgrade;
             Task.Run(ConnectWebSocket); // Start WebSocket connection asynchronously
         }
+
 
         // Singleton Instance
         public static WebSocketComunication Instance(string tankType, string selectedUpgrade, GameClientFacade gameClient)
@@ -43,7 +44,8 @@ namespace windowsForms_client
             }
         }
 
-        private async Task ConnectWebSocket()
+
+        public async Task ConnectWebSocket()
         {
             clientSocket = new ClientWebSocket();
             await clientSocket.ConnectAsync(new Uri("ws://localhost:5000/ws"), CancellationToken.None);
@@ -58,13 +60,13 @@ namespace windowsForms_client
             result = await clientSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
             string tankColor = Encoding.UTF8.GetString(buffer, 0, result.Count);
 
-            await SendSelectedUpgrade();
+            await SendSelectedUpgrade(selectedUpgrade);
 
             client.InitializeTank(tankType, tankColor, playerId);
             await ReceiveUpdates();
         }
 
-        public async Task SendSelectedUpgrade()
+        public async Task SendSelectedUpgrade(string selectedUpgrade)
         {
             if (clientSocket.State == WebSocketState.Open && selectedUpgrade != "-")
             {
@@ -100,7 +102,7 @@ namespace windowsForms_client
             }
         }
 
-        private async Task ReceiveUpdates()
+        public async Task ReceiveUpdates()
         {
             var buffer = new byte[8192];
             var options = new JsonSerializerOptions();
@@ -154,6 +156,7 @@ namespace windowsForms_client
 
                     try
                     {
+                        
                         Tank receivedTank = JsonSerializer.Deserialize<Tank>(message, options);
                         client.UpdatePlayerPosition(receivedTank);
                     }
@@ -176,6 +179,7 @@ namespace windowsForms_client
                 await clientSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
             }
         }
+
 
         private class TankConverter : JsonConverter<Tank>
         {
