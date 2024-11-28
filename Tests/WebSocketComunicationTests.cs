@@ -18,7 +18,7 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
-            _webSocketComunication = WebSocketComunication.Instance("Pistol", "Movement speed boost", new GameClientFacade("Pistol", "Movement speed boost", "Keyboard"));
+            _webSocketComunication = WebSocketComunication.Instance("sdasd", "Movement speed boost", new GameClientFacade("Pistol", "Movement speed boost", "Keyboard"));
 
         }
 

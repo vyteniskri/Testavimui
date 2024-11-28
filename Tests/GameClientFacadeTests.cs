@@ -25,7 +25,7 @@ namespace Tests
         public void SetUp()
         {
 
-            _testClass = new GameClientFacade("PistolTank", "Red", "");
+            _testClass = new GameClientFacade("Pistol", "Movement speed boost", "Keyboard");
 
         }
 
@@ -151,6 +151,9 @@ namespace Tests
             var isTimerEnabled = gameLoopTimer?.Enabled == true;
             Console.WriteLine($"Timer started: {isTimerEnabled}");
             Assert.That(isTimerEnabled, Is.True, "gameLoopTimer should be started.");
+
+            //Stop game timer
+            gameLoopTimer.Stop();
         }
 
 
