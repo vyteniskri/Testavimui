@@ -25,7 +25,7 @@ namespace windowsForms_client
 {
     public partial class GameClientFacade : Form
     {
-        private bool isMousePressed = false; 
+        private bool isMousePressed = false;
         private Point mousePosition;
         public string controlType;
 
@@ -97,8 +97,8 @@ namespace windowsForms_client
 
             obstacles.Add(mistCreator.CreateObstacle(100, 100, new BlindnessStrategy()));
             obstacles.Add(mistCreator.CreateObstacle(600, 100, new BlindnessStrategy()));
-            obstacles.Add(mudCreator.CreateObstacle(200, 250, new SlowStrategy()));    
-            obstacles.Add(iceCreator.CreateObstacle(600, 350, new FastStrategy()));    
+            obstacles.Add(mudCreator.CreateObstacle(200, 250, new SlowStrategy()));
+            obstacles.Add(iceCreator.CreateObstacle(600, 350, new FastStrategy()));
             obstacles.Add(snowCreator.CreateObstacle(350, 150, new StuckStrategy()));
 
 
@@ -109,7 +109,7 @@ namespace windowsForms_client
             //PLEASE CHECK IF THIS CAUSES ERRORS TO U
 
             string imagePath = @"Images\gold.jpg";
-            Console.WriteLine(imagePath);
+            //Console.WriteLine(imagePath);
 
             //COMMENT THIS
             coin = new Coin("Gold", new Random().Next(0, 800), new Random().Next(0, 300), new CoinDetails(1, imagePath, Image.FromFile(imagePath)));
@@ -182,7 +182,7 @@ namespace windowsForms_client
                 if (tankType == "Pistol")
                 {
                     CurrentTank = RF.createPistolTank(playerId, 600, 200);
-                    
+
                 }
                 if (tankType == "TommyGun")
                 {
@@ -193,7 +193,7 @@ namespace windowsForms_client
                     CurrentTank = RF.createShotgunTank(playerId, 600, 200);
                 }
 
-            } 
+            }
             else if (tankColor == "Blue")
             {
                 AbstractFactory BF = new BlueFactory();
@@ -210,10 +210,10 @@ namespace windowsForms_client
                     CurrentTank = BF.createShotgunTank(playerId, 100, 200);
                 }
             }
-            
+
             Console.WriteLine(CurrentTank.getNameOfTank());
             allPlayers.Add(CurrentTank);
-            if(controlType == "Mouse")
+            if (controlType == "Mouse")
             {
                 _controlAdapter = new MouseControlAdapter(CurrentTank);
             }
@@ -225,7 +225,7 @@ namespace windowsForms_client
         }
 
 
-        private void BeginGameLoop()
+        public void BeginGameLoop()
         {
             // Start the game loop (60 FPS -> 16ms interval)
             gameLoopTimer = new System.Timers.Timer(16);
@@ -272,13 +272,13 @@ namespace windowsForms_client
                     spacebarPressed = false;
                 }
             }
-              
+
         }
 
 
         private async void OnGameLoop(object sender, ElapsedEventArgs e)
         {
-           
+
             if (isMousePressed)
             {
                 // Calculate the direction based on mouse position and move the tank accordingly
@@ -364,7 +364,7 @@ namespace windowsForms_client
                 {
                     if (obstacle.HasBeenAffected)
                     {
-                        obstacle.HasBeenAffected = false; 
+                        obstacle.HasBeenAffected = false;
                     }
                 }
             }
@@ -409,7 +409,7 @@ namespace windowsForms_client
                 {
                     CurrentTank.bullets.RemoveAt(i);
                 }
-                
+
             }
             if (isBullet)
             {
@@ -433,7 +433,7 @@ namespace windowsForms_client
                 // Optionally, update bullets if necessary
                 existingPlayer.bullets.Clear(); // Clear existing bullets
                 existingPlayer.bullets.AddRange(receivedTank.bullets);
-                
+
             }
             else
             {
@@ -549,7 +549,7 @@ namespace windowsForms_client
             }
 
             //COMMENT THIS
-           e.Graphics.DrawImage(coin.Details.image, coin.X, coin.Y, 10, 10);
+            e.Graphics.DrawImage(coin.Details.image, coin.X, coin.Y, 10, 10);
 
             foreach (var player in allPlayers.ToList())
             {
@@ -565,18 +565,22 @@ namespace windowsForms_client
 
         private void PrintTankType(string tankType)
         {
-           
+
             if (tankType == "Pistol")
             {
-               
+
                 Console.WriteLine("Pistol tank created.");
             }
             else if (tankType == "TommyGun")
             {
-               
+
                 Console.WriteLine("TommyGun tank created.");
             }
         }
 
+        private void GameClientFacade_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

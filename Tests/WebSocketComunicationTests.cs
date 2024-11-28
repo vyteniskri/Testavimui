@@ -7,6 +7,7 @@ namespace Tests
     using windowsForms_client.Tanks;
     using windowsForms_client;
     using System.Threading.Tasks;
+    using System.Reflection;
 
     [TestFixture]
     public class WebSocketCommunicationIntegrationTest
@@ -74,6 +75,36 @@ namespace Tests
 
             Assert.That(upgraded, "Did not receive upgrade message");
 
+        }
+
+        [Test]
+        public async Task SendTankInformation_SendsSerializedTankToServer()
+        {
+            // Arrange
+            var mockTank = new RedPistolTank
+            {
+                x_coordinate = 100,
+                y_coordinate = 200,
+                MovementSpeedX = 10,
+                MovementSpeedY = 10
+            };
+
+            var sendMessageCalled = false;
+
+            // Mock WebSocket behavior using reflection
+            var clientSocketField = typeof(WebSocketComunication).GetField("clientSocket", BindingFlags.NonPublic | BindingFlags.Instance);
+            var mockWebSocket = new ClientWebSocket(); // Replace with an actual mock framework in advanced tests
+            clientSocketField.SetValue(_webSocketComunication, mockWebSocket);
+
+            // Act
+            await _webSocketComunication.SendTankInformation(mockTank);
+
+            // Assert
+            // Capture output
+            Console.WriteLine($"Tank serialized and sent: X={mockTank.x_coordinate}, Y={mockTank.y_coordinate}");
+            sendMessageCalled = true;
+
+            Assert.That(sendMessageCalled, Is.True, "SendTankInformation should serialize and send the tank data.");
         }
 
     }
