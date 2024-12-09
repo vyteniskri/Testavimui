@@ -275,7 +275,7 @@ namespace windowsForms_client
 
         }
 
-
+        
         private async void OnGameLoop(object sender, ElapsedEventArgs e)
         {
 
@@ -469,7 +469,7 @@ namespace windowsForms_client
             }
             else if (upgradeType == "Shield")
             {
-                CurrentTank.UpdateShield(upgradeValue);
+                CurrentTank.UpdateShield1(upgradeValue);
             }
         }
 

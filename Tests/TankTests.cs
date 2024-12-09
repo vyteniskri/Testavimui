@@ -167,7 +167,7 @@ namespace Tests
             var value = 1588053975;
 
             // Act
-            _testClass.UpdateShield(value);
+            _testClass.UpdateShield1(value);
 
             // Assert
             Assert.Fail("Create or modify test");
