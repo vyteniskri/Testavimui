@@ -121,7 +121,7 @@ namespace windowsForms_client
 
         }
 
-        public void UpdateShield(int value)
+        public void UpdateShield1(int value)
         {
 
         }

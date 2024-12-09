@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "windowsForms-client", "windowsForms-client.csproj", "{2FD10ECB-A4B9-4934-8642-070BD739EDE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "..\Tests\Tests.csproj", "{E4205D6B-AFDB-4383-8611-6991780AEC20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "..\Tests\Tests.csproj", "{E4205D6B-AFDB-4383-8611-6991780AEC20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
