@@ -27,7 +27,7 @@ namespace WebSocketServer
             {
                 HttpListenerContext httpContext = await httpListener.GetContextAsync();
 
-                if (httpContext.Request.IsWebSocketRequest && server.GetNumberOfObservers() < 2)
+                if (httpContext.Request.IsWebSocketRequest)
                 {
                     HttpListenerWebSocketContext wsContext = await httpContext.AcceptWebSocketAsync(null);
                     WebSocket webSocket = wsContext.WebSocket;
