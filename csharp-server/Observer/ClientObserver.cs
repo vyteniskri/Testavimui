@@ -66,11 +66,25 @@ namespace csharp_server.Observer
             await _sendLock.WaitAsync();
             try
             {
-                if (WebSocket.State == WebSocketState.Open)
+                // Ensure the message is not null or empty
+                if (string.IsNullOrEmpty(message))
                 {
-                    var buffer = Encoding.UTF8.GetBytes(message);
-                    await WebSocket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);
+                    return; // Exit early if the message is null or empty
                 }
+
+                // Ensure the WebSocket is in a valid state before sending
+                if (WebSocket.State != WebSocketState.Open)
+                {
+                    return; // Exit early if the WebSocket is not open
+                }
+
+           
+                var buffer = Encoding.UTF8.GetBytes(message);
+                await WebSocket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, CancellationToken.None);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error during WebSocket send: {ex.Message}");
             }
             finally
             {
@@ -107,25 +121,93 @@ namespace csharp_server.Observer
             
         }
 
+        private readonly SemaphoreSlim _closeSemaphore = new SemaphoreSlim(1, 1);
+
         public async void RemoveClient(WebSocketReceiveResult result)
         {
-            if (this.PlayerColor == "Blue")
+            await _sendLock.WaitAsync();
+            try
             {
-                Server.SetUsedColor("Red");
+                if (result == null)
+                {
+                    return;
+                }
+                // Ensure Server is not null
+                if (Server == null)
+                {
+                    return; // Exit the method if Server is null
+                }
+
+
+                if (string.IsNullOrEmpty(this.PlayerColor))
+                {
+                    return;
+                }
+
+                // Update color availability if Server is set
+                if (this.PlayerColor == "Blue")
+                {
+                    Server.SetUsedColor("Red");
+                }
+                else if (this.PlayerColor == "Red")
+                {
+                    Server.SetUsedColor("Blue");
+                }
+                else
+                {
+                    return; // Exit if the color is not valid
+                }
+
+                if (Server != null)
+                {
+                    Server.Detach(this);
+                    Server.DeatchUpgradeUser(this);
+                }
+                else
+                {
+                    return;
+                }
+
+                if (PlayerId == null)
+                {
+                    return;
+                }
+
+                // Detach client from server (ensure Server is valid)
+                Server.Detach(this);
+                Server.DeatchUpgradeUser(this);
+
+                // Notify server about the removal
+                var removeMessage = $"Remove,{PlayerId}";
+                this.NotifyServer(removeMessage);
+
+                // Safely close the WebSocket (check if it's not null)
+                if (WebSocket != null && WebSocket.State != WebSocketState.Aborted)
+                {
+
+                    try
+                    {
+                        if (WebSocket.State == WebSocketState.Open || WebSocket.State == WebSocketState.CloseReceived)
+                        {
+                            await WebSocket.CloseOutputAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error while closing WebSocket: {ex.Message}");
+                    }
+                }
+
+                Console.WriteLine($"Client {PlayerId} disconnected");
             }
-            else if (this.PlayerColor == "Red")
+            catch (Exception ex)
             {
-                Server.SetUsedColor("Blue");
+                Console.WriteLine($"Error while removing client {PlayerId}: {ex.Message}");
             }
-
-            Server.Detach(this);
-            Server.DeatchUpgradeUser(this);
-
-            var removeMessage = $"Remove,{PlayerId}";
-            this.NotifyServer(removeMessage);
-
-            await WebSocket.CloseOutputAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
-            Console.WriteLine($"Client {PlayerId} disconnected");
+            finally
+            {
+                _sendLock.Release();
+            }
         }
 
         
